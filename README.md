@@ -9,8 +9,6 @@
 
 ## 属性说明
 
-【text】
-二维码图片中包含的文本内容信息
 <table>
     <caption><h3>组件属性</h3></caption>
     <thead>
