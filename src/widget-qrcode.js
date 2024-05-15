@@ -35,7 +35,6 @@ class WidgetQRCode extends HTMLElement {
             width: ${this.width||300}px;
             height: ${this.height||300}px;
         }`);
-        console.log('[test]',[defaultSheet,styleSheet]);
         if(_.shadowRoot.adoptedStyleSheets){
             _.shadowRoot.adoptedStyleSheets = [defaultSheet,styleSheet];
         }else{
@@ -50,7 +49,6 @@ class WidgetQRCode extends HTMLElement {
         _.drawQRCode();
 
         _.addEventListener('resize',function(){
-            console.log('[resize!]');
             _.resize();
         },false);
     }
