@@ -455,6 +455,7 @@ a:hover{
     }
     .mod-panel .view-box widget-qrcode{
         width: 200px;
+        height: 200px;
     }
     .mod-panel .setting-box{
         width: auto;

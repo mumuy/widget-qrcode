@@ -30,12 +30,18 @@ class WidgetQRCode extends HTMLElement {
         let _ = this;
         // 模板
         _.attachShadow({mode:'open'});
+        const defaultSheet = new CSSStyleSheet();
+        defaultSheet.insertRule(`:host{
+            width: ${this.width||300}px;
+            height: ${this.height||300}px;
+        }`);
+        console.log('[test]',[defaultSheet,styleSheet]);
         if(_.shadowRoot.adoptedStyleSheets){
-            _.shadowRoot.adoptedStyleSheets = [styleSheet];
+            _.shadowRoot.adoptedStyleSheets = [defaultSheet,styleSheet];
         }else{
             const $style = document.createElement('style');
             $style.rel = 'stylesheet';
-            $style.textContent = [...styleSheet.cssRules].map(item=>item.cssText).join('');
+            $style.textContent = [defaultSheet.cssRules,...styleSheet.cssRules].map(item=>item.cssText).join('');
             _.shadowRoot.appendChild($style);
         }
 
@@ -67,13 +73,7 @@ class WidgetQRCode extends HTMLElement {
     }
     resize(){
         let _ = this;
-        if(_.width){
-            _.$module.style.width = typeof _.width=='number'?_.width+'px':'auto';
-        }
-        if(_.height){
-            _.$module.style.height = typeof _.height=='number'?_.height+'px':'auto';
-        }
-        let clientSize = Math.max(_.$module.clientWidth,_.$module.clientHeight);
+        let clientSize = Math.max(_.clientWidth,_.clientHeight);
         _.$canvas.width = clientSize*2;
         _.$canvas.height = clientSize*2;
         _.drawQRCode();
