@@ -1,0 +1,46 @@
+{
+    "name": "qrcode-tool",
+    "version": "1.0.0",
+    "description": "qrcode component",
+    "author": "HaoLe Zheng",
+    "license": "MIT",
+    "keywords": [
+        "二维码组件",
+        "QRCode",
+        "二维码图片"
+    ],
+    "main": "./dist/qrcode.min.js",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/mumuy/widget-qrcode.git"
+    },
+    "bugs": {
+        "url": "https://github.com/mumuy/widget-qrcode/issues"
+    },
+    "engines": {
+        "node": ">=18",
+        "yarn": "please-use-npm",
+        "npm": ">=8"
+    },
+    "devDependencies": {
+        "@babel/core": "^7.23.2",
+        "@babel/plugin-syntax-import-attributes": "^7.22.5",
+        "@babel/plugin-transform-class-properties": "^7.22.5",
+        "@babel/plugin-transform-runtime": "^7.23.2",
+        "@babel/preset-env": "^7.23.2",
+        "@babel/runtime": "^7.23.2",
+        "@rollup/plugin-babel": "^6.0.3",
+        "@rollup/plugin-node-resolve": "^15.1.0",
+        "@rollup/plugin-terser": "^0.4.1",
+        "acorn-import-assertions": "^1.9.0",
+        "rollup": "^3.26.3",
+        "rollup-plugin-import-assert": "^3.0.1"
+    },
+    "scripts": {
+        "build": "rollup -c",
+        "watch": "rollup -wc"
+    },
+    "homepage": "https://passer-by.com/widget-qrcode/",
+    "directories": {
+    }
+}

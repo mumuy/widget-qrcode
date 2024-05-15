@@ -1,0 +1,20 @@
+:host {
+    display: inline-table;
+    vertical-align: middle;
+    container-type: inline-size;
+    font-family: Arial,Helvetica,"Microsoft Yahei";
+    font-size: 14px;
+}
+
+.mod-qrcode{
+    width: 300px;
+    height: 300px;
+    min-width: 100px;
+    min-height: 100px;
+    aspect-ratio: 1;
+}
+.mod-qrcode canvas{
+    width: 100%;
+    height: 100%;
+    background: #ffffff;
+}
