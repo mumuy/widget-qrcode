@@ -80,7 +80,7 @@
                         let value = this.value.trim();
                         hander&&clearTimeout(hander);
                         hander = setTimeout(function(){
-                            $qrcode.setAttribute('text',value);
+                            $qrcode.setAttribute('value',value);
                         },250);
                     },false);
                 </script>
