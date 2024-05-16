@@ -25,7 +25,7 @@ class WidgetQRCode extends HTMLElement {
         return +this.getAttribute('height')||0;
     }
     attributeChangedCallback(name, oldValue, newValue){
-        if(name=='text'&&oldValue!=newValue){
+        if(name=='value'&&oldValue!=newValue){
             this.context&&this.drawQRCode();
         }
     }
