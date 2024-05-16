@@ -3,7 +3,7 @@
 
 ## 网页组件
 ```html
-<widget-qrcode text="https://passer-by.com/"></widget-code>
+<widget-qrcode value="https://passer-by.com/"></widget-code>
 ```
 
 
@@ -15,7 +15,9 @@
         <tr><th>属性</th><th>说明</th></tr>
     </thead>
     <tbody>
-        <tr><td>text</td><td>二维码内容</td></tr>
+        <tr><td>value</td><td>二维码内容</td></tr>
+        <tr><td>template</td><td>样式模板,可选：'default','water','star'</td></tr>
+        <tr><td>level</td><td>纠错等级,可选：'M','L','H','Q'</td></tr>
         <tr><td>width</td><td>二维码宽度，默认：300</td></tr>
         <tr><td>height</td><td>二维码高度，默认：300</td></tr>
     </tbody>

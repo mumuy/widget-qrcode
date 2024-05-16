@@ -7,13 +7,16 @@ class WidgetQRCode extends HTMLElement {
         super();
     }
     static get observedAttributes(){
-        return ['text','level','width','height'];
+        return ['value','template','level','width','height'];
     }
-    get text(){
-        return this.getAttribute('text')||'https://passer-by.com/';
+    get value(){
+        return this.getAttribute('value')||'https://passer-by.com/';
+    }
+    get template(){
+        return this.getAttribute('template')||'default';
     }
     get level(){
-        return +this.getAttribute('level')||'H';
+        return this.getAttribute('level')||'H';
     }
     get width(){
         return +this.getAttribute('width')||0;
@@ -78,9 +81,9 @@ class WidgetQRCode extends HTMLElement {
     }
     drawQRCode(){
         let _ = this;
-        let data = QRCode(_.text, _.level);
+        let data = QRCode(_.value, _.level);
         _.context.clearRect(0,0,_.$canvas.width,_.$canvas.height);
-        Draw['default'](_.context, data, {});
+        (Draw[_.template]||Draw['default'])(_.context, data, {});
     }
 }
 
