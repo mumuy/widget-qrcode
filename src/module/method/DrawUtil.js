@@ -91,18 +91,28 @@ export default function(context,data,options) {
                 }
             }
         },
-        // 前景图片笔刷
-        getForegroundImageBrush:function(image){
+        // 图片笔刷
+        getImageBrush:function(image,fill='default'){
             let brush;
             if(image.width>context.canvas.width||image.height>context.canvas.height){
                 let $canvas = document.createElement('canvas');
                 let contextTemp = $canvas.getContext('2d');
-                if(image.width>context.canvas.width){
-                    $canvas.width = context.canvas.width;
-                    $canvas.height = image.height/image.width*context.canvas.width;
+                if(image.width>context.canvas.width&&image.height>context.canvas.height){
+                    if(image.width/image.height<context.canvas.width/context.canvas.height){
+                        $canvas.width = context.canvas.width;
+                        $canvas.height = image.height/image.width*context.canvas.width;
+                    }else{
+                        $canvas.width = image.width/image.height*context.canvas.height;
+                        $canvas.height = context.canvas.height;
+                    }
                 }else{
-                    $canvas.width = image.width/image.height*context.canvas.height;
-                    $canvas.height = context.canvas.height;
+                    if(image.width>context.canvas.width){
+                        $canvas.width = context.canvas.width;
+                        $canvas.height = image.height/image.width*context.canvas.width;
+                    }else{
+                        $canvas.width = image.width/image.height*context.canvas.height;
+                        $canvas.height = context.canvas.height;
+                    }
                 }
                 contextTemp.drawImage(image,0,0,$canvas.width,$canvas.height);
                 brush = context.createPattern($canvas,'repeat');

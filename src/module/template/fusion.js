@@ -18,9 +18,9 @@ export default function(context,data,options){
         let backgroundColor = options.backgroundColor||'#ffffff';
         let foregroundColor = options.foregroundColor||'#000000';
         let colors = foregroundColor.split(',');
-        let color = colors[0];
+        let foregroundImage = colors[0];
         if(!options.foregroundColor&&resources.foregroundImage){
-            color = api.getForegroundImageBrush(resources.foregroundImage);
+            foregroundImage = api.getImageBrush(resources.foregroundImage);
         }
         if(colors.length>1){
             let gradient = context.createLinearGradient(0,0,context.canvas.width,context.canvas.height);
@@ -28,41 +28,43 @@ export default function(context,data,options){
             colors.forEach(function(value,index){
                 gradient.addColorStop(index/length,value);
             });
-            color = gradient;
+            foregroundImage = gradient;
         }
-        let innerColor = options.innerColor||color;
-        let outerColor = options.outerColor||color;
-        context.save();
+        let innerColor = options.innerColor||foregroundColor;
+        let outerColor = options.outerColor||foregroundColor;
         if(resources.backgroundImage){
-            context.drawImage(resources.backgroundImage,0,0,context.canvas.width,context.canvas.height);
-        }else{
-            context.fillStyle = backgroundColor;
-            context.fillRect(0,0,context.canvas.width,context.canvas.height);
+            foregroundColor = foregroundColor.replace(/#([0-9a-fA-F]{6}).*/,'#$188');
+            backgroundColor = backgroundColor.replace(/#([0-9a-fA-F]{6}).*/,'#$188');
+            innerColor = innerColor.replace(/#([0-9a-fA-F]{6}).*/,'#$188');
+            outerColor = outerColor.replace(/#([0-9a-fA-F]{6}).*/,'#$188');
         }
+        let innerImage = innerColor||foregroundImage;
+        let outerImage = outerColor||foregroundImage;
+        let backgroundImage = resources.backgroundImage?api.getImageBrush(resources.backgroundImage):backgroundColor;
+        context.save();
+        context.fillStyle = backgroundImage;
+        context.fillRect(0,0,context.canvas.width,context.canvas.height);
         context.restore();
         context.save();
         context.translate(x,y);
         for(let i=0;i<len;i++){
             for(let j=0;j<len;j++){
-                if(api.isPositionPoint(i,j)==1){
-                    let fillColor = api.getValue(i,j)==1?(options.innerColor||options.foregroundColor||'#000000'):(options.backgroundColor||'#ffffff');
-                    if(resources.backgroundImage){
-                        fillColor = fillColor.replace(/#([0-9a-fA-F]{6}).*/,'#$188');
+                if(api.isPositionPoint(i,j)){
+                    if(api.getValue(i,j)==1){
+                        context.fillStyle = outerImage;
+                        context.fillRect(i*pxWidth,j*pxWidth,7*pxWidth,7*pxWidth);
+                        context.fillStyle = backgroundImage;
+                        context.fillRect((i+1)*pxWidth,(j+1)*pxWidth,5*pxWidth,5*pxWidth);
+                        context.fillStyle = backgroundColor;
+                        context.fillRect((i+1)*pxWidth,(j+1)*pxWidth,5*pxWidth,5*pxWidth);
+                        context.fillStyle = backgroundImage;
+                        context.fillRect((i+2)*pxWidth,(j+2)*pxWidth,3*pxWidth,3*pxWidth);
+                        context.fillStyle = innerImage;
+                        context.fillRect((i+2)*pxWidth,(j+2)*pxWidth,3*pxWidth,3*pxWidth);
+                        api.setRangeDisabled(i,j,7,7);
                     }
-                    context.fillStyle = fillColor;
-                    context.fillRect(i*pxWidth,j*pxWidth,pxWidth,pxWidth);
-                }else if(api.isPositionPoint(i,j)==2){
-                    let fillColor = api.getValue(i,j)==1?(options.outerColor||options.foregroundColor||'#000000'):(options.backgroundColor||'#ffffff');
-                    if(resources.backgroundImage){
-                        fillColor = fillColor.replace(/#([0-9a-fA-F]{6}).*/,'#$188');
-                    }
-                    context.fillStyle = fillColor;
-                    context.fillRect(i*pxWidth,j*pxWidth,pxWidth,pxWidth);
                 }else{
-                    let fillColor = api.getValue(i,j)==1?(options.foregroundColor||'#000000'):(options.backgroundColor||'#ffffff');
-                    if(resources.backgroundImage){
-                        fillColor = fillColor.replace(/#([0-9a-fA-F]{6}).*/,'#$188');
-                    }
+                    let fillColor = api.getValue(i,j)==1?foregroundColor:backgroundColor;
                     context.fillStyle = fillColor;
                     context.beginPath();
                     context.arc(i*pxWidth,j*pxWidth,0.5*pxWidth,0,0.5*Math.PI);

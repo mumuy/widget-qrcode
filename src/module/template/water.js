@@ -18,9 +18,9 @@ export default function(context,data,options){
         let backgroundColor = options.backgroundColor||'#ffffff';
         let foregroundColor = options.foregroundColor||'#000000';
         let colors = foregroundColor.split(',');
-        let color = colors[0];
+        let foregroundImage = colors[0];
         if(!options.foregroundColor&&resources.foregroundImage){
-            color = api.getForegroundImageBrush(resources.foregroundImage);
+            foregroundImage = api.getImageBrush(resources.foregroundImage);
         }
         if(colors.length>1){
             let gradient = context.createLinearGradient(0,0,context.canvas.width,context.canvas.height);
@@ -28,17 +28,17 @@ export default function(context,data,options){
             colors.forEach(function(value,index){
                 gradient.addColorStop(index/length,value);
             });
-            color = gradient;
+            foregroundImage = gradient;
         }
-        let innerColor = options.innerColor||color;
-        let outerColor = options.outerColor||color;
-        context.save();
+        let innerColor = options.innerColor||foregroundImage;
+        let outerColor = options.outerColor||foregroundImage;
+        let backgroundImage = backgroundColor;
         if(!options.backgroundColor&&resources.backgroundImage){
-            context.drawImage(resources.backgroundImage,0,0,context.canvas.width,context.canvas.height);
-        }else{
-            context.fillStyle = backgroundColor;
-            context.fillRect(0,0,context.canvas.width,context.canvas.height);
+            backgroundImage = context.drawImage(resources.backgroundImage,0,0,context.canvas.width,context.canvas.height);
         }
+        context.save();
+        context.fillStyle = backgroundImage;
+        context.fillRect(0,0,context.canvas.width,context.canvas.height);
         context.restore();
         context.save();
         context.translate(x,y);
@@ -51,8 +51,8 @@ export default function(context,data,options){
                     context.fillStyle = outerColor;
                     context.strokeStyle = outerColor;
                 }else{
-                    context.fillStyle = color;
-                    context.strokeStyle = color;
+                    context.fillStyle = foregroundImage;
+                    context.strokeStyle = foregroundImage;
                 }
                 if (api.getValue(i,j)){
                     let cx = i * pxWidth;

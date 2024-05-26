@@ -74,10 +74,12 @@ class WidgetQRCode extends HTMLElement {
         _.addEventListener('resize',function(){
             _.resize();
         },false);
-        // 修复切换tab画布被清空问题
-        document.addEventListener('visibilitychange',function(){
-            _.drawQRCode();
-        });
+        // Edge浏览器切换tab画布被清空问题
+        if(navigator.userAgent.includes('Edg/')){
+            document.addEventListener('visibilitychange',function(){
+                _.drawQRCode();
+            });
+        }
     }
     render(parser){
         let _ = this;

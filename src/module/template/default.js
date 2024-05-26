@@ -18,9 +18,9 @@ export default function(context,data,options){
         let backgroundColor = options.backgroundColor||'#ffffff';
         let foregroundColor = options.foregroundColor||'#000000';
         let colors = foregroundColor.split(',');
-        let color = colors[0];
+        let foregroundImage = colors[0];
         if(!options.foregroundColor&&resources.foregroundImage){
-            color = api.getForegroundImageBrush(resources.foregroundImage);
+            foregroundImage = api.getImageBrush(resources.foregroundImage);
         }
         if(colors.length>1){
             let gradient = context.createLinearGradient(0,0,context.canvas.width,context.canvas.height);
@@ -28,17 +28,17 @@ export default function(context,data,options){
             colors.forEach(function(value,index){
                 gradient.addColorStop(index/length,value);
             });
-            color = gradient;
+            foregroundImage = gradient;
         }
-        let innerColor = options.innerColor||color;
-        let outerColor = options.outerColor||color;
-        context.save();
+        let innerColor = options.innerColor||foregroundImage;
+        let outerColor = options.outerColor||foregroundImage;
+        let backgroundImage = backgroundColor;
         if(!options.backgroundColor&&resources.backgroundImage){
-            context.drawImage(resources.backgroundImage,0,0,context.canvas.width,context.canvas.height);
-        }else{
-            context.fillStyle = backgroundColor;
-            context.fillRect(0,0,context.canvas.width,context.canvas.height);
+            backgroundImage = context.drawImage(resources.backgroundImage,0,0,context.canvas.width,context.canvas.height);
         }
+        context.save();
+        context.fillStyle = backgroundImage;
+        context.fillRect(0,0,context.canvas.width,context.canvas.height);
         context.restore();
         context.save();
         context.translate(x,y);
@@ -50,7 +50,7 @@ export default function(context,data,options){
                     }else if(api.isPositionPoint(i,j)==2){
                         context.fillStyle = outerColor;
                     }else{
-                        context.fillStyle = color;
+                        context.fillStyle = foregroundImage;
                     }
                     context.fillRect(Math.ceil(i*pxWidth)-0.5,Math.ceil(j*pxWidth)-0.5,Math.ceil(pxWidth)+1,Math.ceil(pxWidth)+1);
                 }

@@ -18,19 +18,19 @@ export default function(context,data,options){
         let backgroundColor = options.backgroundColor||'#ffffff';
         let foregroundColor = options.foregroundColor||'#000000';
         let colors = foregroundColor.split(',');
-        let color = colors[0];
+        let foregroundImage = colors[0];
         if(!options.foregroundColor&&resources.foregroundImage){
-            color = api.getForegroundImageBrush(resources.foregroundImage);
+            foregroundImage = api.getImageBrush(resources.foregroundImage);
         }
-        let innerColor = options.innerColor||colors?.[1]||color;
-        let outerColor = options.outerColor||color;
-        context.save();
+        let innerColor = options.innerColor||colors?.[1]||foregroundImage;
+        let outerColor = options.outerColor||foregroundImage;
+        let backgroundImage = backgroundColor;
         if(!options.backgroundColor&&resources.backgroundImage){
-            context.drawImage(resources.backgroundImage,0,0,context.canvas.width,context.canvas.height);
-        }else{
-            context.fillStyle = backgroundColor;
-            context.fillRect(0,0,context.canvas.width,context.canvas.height);
+            backgroundImage = context.drawImage(resources.backgroundImage,0,0,context.canvas.width,context.canvas.height);
         }
+        context.save();
+        context.fillStyle = backgroundImage;
+        context.fillRect(0,0,context.canvas.width,context.canvas.height);
         context.restore();
         context.save();
         context.translate(x+pxWidth/2,y+pxWidth/2);
@@ -38,10 +38,6 @@ export default function(context,data,options){
         for(let i=0;i<len;i++){
             for(let j=0;j<len;j++){
                 if(api.getValue(i,j)==1){
-                    let color = colors[(i+j)%colors.length];
-                    if(!options.foregroundColor&&resources.foregroundImage){
-                        color = context.createPattern(resources.foregroundImage,'repeat');
-                    }
                     if(api.isPositionPoint(i,j)==1){
                         context.fillStyle = innerColor;
                         context.strokeStyle = innerColor;
@@ -49,8 +45,12 @@ export default function(context,data,options){
                         context.fillStyle = outerColor;
                         context.strokeStyle = outerColor;
                     }else{
-                        context.fillStyle = color;
-                        context.strokeStyle = color;
+                        let fillColor = colors[(i+j)%colors.length];
+                        if(!options.foregroundColor&&resources.foregroundImage){
+                            fillColor = foregroundImage;
+                        }
+                        context.fillStyle = fillColor;
+                        context.strokeStyle = fillColor;
                     }
                     if(api.isPositionPoint(i,j)){
                         context.beginPath();

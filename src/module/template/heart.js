@@ -18,19 +18,19 @@ export default function(context,data,options){
         let backgroundColor = options.backgroundColor||'#ffffff';
         let foregroundColor = options.foregroundColor||'#000000';
         let colors = foregroundColor.split(',');
-        let color = colors[0];
+        let foregroundImage = colors[0];
         if(!options.foregroundColor&&resources.foregroundImage){
-            color = api.getForegroundImageBrush(resources.foregroundImage);
+            foregroundImage = api.getImageBrush(resources.foregroundImage);
         }
-        let innerColor = options.innerColor||colors?.[1]||color;
-        let outerColor = options.outerColor||color;
-        context.save();
+        let innerColor = options.innerColor||colors?.[1]||foregroundImage;
+        let outerColor = options.outerColor||foregroundImage;
+        let backgroundImage = backgroundColor;
         if(!options.backgroundColor&&resources.backgroundImage){
-            context.drawImage(resources.backgroundImage,0,0,context.canvas.width,context.canvas.height);
-        }else{
-            context.fillStyle = backgroundColor;
-            context.fillRect(0,0,context.canvas.width,context.canvas.height);
+            backgroundImage = context.drawImage(resources.backgroundImage,0,0,context.canvas.width,context.canvas.height);
         }
+        context.save();
+        context.fillStyle = backgroundImage;
+        context.fillRect(0,0,context.canvas.width,context.canvas.height);
         context.restore();
         let unit = pxWidth;
         for(let i=0;i<len;i++){
@@ -42,11 +42,11 @@ export default function(context,data,options){
                     }else if(api.isPositionPoint(i,j)==2){
                         context.fillStyle = outerColor;
                     }else{
-                        let color = colors[(i+j)%colors.length];
+                        let fillColor = colors[(i+j)%colors.length];
                         if(!options.foregroundColor&&resources.foregroundImage){
-                            color = context.createPattern(resources.foregroundImage,'repeat');
+                            fillColor = foregroundImage;
                         }
-                        context.fillStyle = color;
+                        context.fillStyle = fillColor;
                     }
                     if(api.getRangeTrue(i,j,3,3)){
                         unit = 0.92*pxWidth;
