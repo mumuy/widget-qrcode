@@ -49,8 +49,8 @@ export default function(context,data,options){
                         context.fillStyle = color;
                     }
                     if(api.getRangeTrue(i,j,3,3)){
-                        unit = 0.8*pxWidth;
-                        context.translate(x+(i+1.5)*pxWidth,y+(j+1.1)*pxWidth);
+                        unit = 0.92*pxWidth;
+                        context.translate(x+(i+1.45)*pxWidth,y+(j+0.95)*pxWidth);
                         context.beginPath();
                         context.arc(-unit,0,unit,Math.PI,0,false);
                         context.arc(unit,0,unit,Math.PI,0,false); //貝塞尔曲线画心

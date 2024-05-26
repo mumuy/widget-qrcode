@@ -34,6 +34,16 @@ export default function(context,data,options){
         context.restore();
         context.save();
         context.translate(x+0.5*pxWidth,y+0.5*pxWidth);
+        let drawItem = function(x,y,width,height){
+            context.beginPath();
+            context.arc(x*pxWidth,y*pxWidth,0.4*pxWidth,1*Math.PI,1.5*Math.PI);
+            context.arc((x+width-1)*pxWidth,y*pxWidth,0.4*pxWidth,1.5*Math.PI,0*Math.PI);
+            context.arc((x+width-1)*pxWidth,(y+height-1)*pxWidth,0.4*pxWidth,0*Math.PI,0.5*Math.PI);
+            context.arc(x*pxWidth,(y+height-1)*pxWidth,0.4*pxWidth,0.5*Math.PI,1*Math.PI);
+            context.closePath();
+            context.fill();
+            api.setRangeDisabled(x,y,width,height);
+        };
         for(let i=0;i<len;i++){
             for(let j=0;j<len;j++){
                 if(api.getValue(i,j)==1){
@@ -64,39 +74,12 @@ export default function(context,data,options){
                         context.closePath();
                         context.fill();
                         api.setRangeDisabled(i,j,7,7);
-                    }else if(api.getRangeTrue(i,j,3,1)){
-                        context.beginPath();
-                        context.arc(i*pxWidth,j*pxWidth,0.4*pxWidth,0.5*Math.PI,1.5*Math.PI);
-                        context.arc((i+2)*pxWidth,j*pxWidth,0.4*pxWidth,-0.5*Math.PI,0.5*Math.PI);
-                        context.closePath();
-                        context.fill();
-                        api.setRangeDisabled(i,j,3,1);
-                    }else if(api.getRangeTrue(i,j,2,1)){
-                        context.beginPath();
-                        context.arc(i*pxWidth,j*pxWidth,0.4*pxWidth,0.5*Math.PI,1.5*Math.PI);
-                        context.arc((i+1)*pxWidth,j*pxWidth,0.4*pxWidth,-0.5*Math.PI,0.5*Math.PI);
-                        context.closePath();
-                        context.fill();
-                        api.setRangeDisabled(i,j,2,1);
-                    }else if(api.getRangeTrue(i,j,1,3)){
-                        context.beginPath();
-                        context.arc(i*pxWidth,j*pxWidth,0.4*pxWidth,Math.PI,2*Math.PI);
-                        context.arc(i*pxWidth,(j+2)*pxWidth,0.4*pxWidth,0,Math.PI);
-                        context.closePath();
-                        context.fill();
-                        api.setRangeDisabled(i,j,1,3);
-                    }else if(api.getRangeTrue(i,j,1,2)){
-                        context.beginPath();
-                        context.arc(i*pxWidth,j*pxWidth,0.4*pxWidth,Math.PI,2*Math.PI);
-                        context.arc(i*pxWidth,(j+1)*pxWidth,0.4*pxWidth,0,Math.PI);
-                        context.closePath();
-                        context.fill();
-                        api.setRangeDisabled(i,j,1,2);
                     }else{
-                        context.beginPath();
-                        context.arc(i*pxWidth,j*pxWidth,0.4*pxWidth,0,2*Math.PI);
-                        context.closePath();
-                        context.fill();
+                        [[4,4],[4,3],[4,3],[4,1],[3,4],[3,3],[3,2],[3,1],[2,4],[2,3],[2,2],[2,1],[1,4],[1,3],[1,2],[1,1]].forEach(function(coord){
+                            if(api.getRangeTrue(i,j,coord[0],coord[1])){
+                                drawItem(i,j,coord[0],coord[1]);
+                            }
+                        });
                     }
                 }
             }

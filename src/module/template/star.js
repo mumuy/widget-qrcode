@@ -7,17 +7,6 @@ export default function(context,data,options){
     let x = margin;
     let y = margin;
     let api = getAPI(context,data,options);
-    let drawItem = function(x,y,pxWidth){
-        let unit = pxWidth*0.6;
-        let unit_p = pxWidth*0.55;
-        context.beginPath();
-        for (let n = 0; n < 5; n++) {
-            context.lineTo(x+Math.cos((18+n*72)/180*Math.PI)*unit+unit_p,y-Math.sin((18+n*72)/180*Math.PI)*unit+unit_p);
-            context.lineTo(x+Math.cos((54+n*72)/180*Math.PI)*0.4*unit+unit_p,y-Math.sin((54+n*72)/180*Math.PI)*0.4*unit+unit_p);
-        }
-        context.closePath();
-        context.fill();
-    };
     let resourcesMap = {};
     if(options.foregroundImage){
         resourcesMap['foregroundImage'] = options.foregroundImage;
@@ -45,6 +34,17 @@ export default function(context,data,options){
         context.restore();
         context.save();
         context.translate(x,y);
+        let drawItem = function(x,y,pxWidth){
+            let unit = pxWidth*0.6;
+            let unit_p = pxWidth*0.55;
+            context.beginPath();
+            for (let n = 0; n < 5; n++) {
+                context.lineTo(x+Math.cos((18+n*72)/180*Math.PI)*unit+unit_p,y-Math.sin((18+n*72)/180*Math.PI)*unit+unit_p);
+                context.lineTo(x+Math.cos((54+n*72)/180*Math.PI)*0.4*unit+unit_p,y-Math.sin((54+n*72)/180*Math.PI)*0.4*unit+unit_p);
+            }
+            context.closePath();
+            context.fill();
+        };
         for(let i=0;i<len;i++){
             for(let j=0;j<len;j++){
                 if(api.getValue(i,j)==1){
