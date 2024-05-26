@@ -1,104 +1,24 @@
-// 绘制角
-export function drawRightAngle(context, x, y, dir, pxWidth) {
-    let cx, cy;
-    switch (dir) {
-        case 0:
-            cx = x * pxWidth;
-            cy = y * pxWidth;
-            context.lineTo(cx, cy);
-            break;
-        case 1:
-            cx = x * pxWidth + pxWidth;
-            cy = y * pxWidth;
-            context.lineTo(cx, cy);
-            break;
-        case 2:
-            cx = x * pxWidth + pxWidth;
-            cy = y * pxWidth + pxWidth;
-            context.lineTo(cx, cy);
-            break;
-        case 3:
-            cx = x * pxWidth;
-            cy = y * pxWidth + pxWidth;
-            context.lineTo(cx, cy);
-            break;
-    }
-};
-
-// 绘制填补角
-export function drawRoundBrick(context, x, y, dir, pxWidth) {
-    let round = pxWidth/2;
-    let cx, cy;
-    switch (dir) {
-        case 0:
-            cx = x * pxWidth + round;
-            cy = y * pxWidth + round;
-            context.arc(cx, cy, round, Math.PI, Math.PI * 1.5, false);
-            break;
-      case 1:
-            cx = x * pxWidth + pxWidth - round;
-            cy = y * pxWidth + round;
-            context.arc(cx, cy, round, Math.PI * 1.5, Math.PI * 2, false);
-            break;
-      case 2:
-            cx = x * pxWidth + pxWidth - round;
-            cy = y * pxWidth + pxWidth - round;
-            context.arc(cx, cy, round, 0, Math.PI / 2, false);
-            break;
-      case 3:
-            cx = x * pxWidth + round;
-            cy = y * pxWidth + pxWidth - round;
-            context.arc(cx, cy, round, Math.PI / 2, Math.PI, false);
-            break;
-    }
-};
-
-// 填充圆
-export function fillRound(context, x, y, dir, pxWidth) {
-    let round = pxWidth/2;
-    let cx, cy;
-    context.beginPath();
-    switch (dir) {
-        case 0:
-            cx = x * pxWidth + round;
-            cy = y * pxWidth + round;
-            context.arc(cx, cy, round, Math.PI, Math.PI * 1.5, false);
-            cx = x * pxWidth;
-            cy = y * pxWidth;
-            break;
-        case 1:
-            cx = x * pxWidth + pxWidth - round;
-            cy = y * pxWidth + round;
-            context.arc(cx, cy, round, Math.PI * 1.5, Math.PI * 2, false);
-            cx = x * pxWidth + pxWidth;
-            cy = y * pxWidth;
-            break;
-        case 2:
-            cx = x * pxWidth + pxWidth - round;
-            cy = y * pxWidth + pxWidth - round;
-            context.arc(cx, cy, round, 0, Math.PI / 2, false);
-            cx = x * pxWidth + pxWidth;
-            cy = y * pxWidth + pxWidth;
-            break;
-        case 3:
-            cx = x * pxWidth + round;
-            cy = y * pxWidth + pxWidth - round;
-            context.arc(cx, cy, round, Math.PI / 2, Math.PI, false);
-            cx = x * pxWidth;
-            cy = y * pxWidth + pxWidth;
-            break;
-        default:
-    }
-    context.lineTo(cx, cy);
-    context.closePath();
-    context.fill();
-    context.stroke();
-};
-
 // 条件判断API
-export function getAPI(data) {
+export default function(context,data,options) {
     return {
+        // 图片加载
+        imageReady:function(resources){
+            let result = {};
+            let promoses = Object.entries(resources).map(function(item){
+                return new Promise(function(resolve){
+                    var image = new Image();
+                    image.src = item[1];
+                    image.onload = function(){
+                        result[item[0]] = image;
+                        resolve();
+                    };
+                });
+            });
+            return promoses.length?Promise.all(promoses).then(()=>result):Promise.resolve({});
+        },
+        // 获取当前点的值
         getValue:(x, y) => data?.[x]?.[y],
+        // 判断定位点
         isPositionPoint:function(i, j) {
             if(!data){
                 return false;
@@ -170,6 +90,120 @@ export function getAPI(data) {
                     }
                 }
             }
+        },
+        // 前景图片笔刷
+        getForegroundImageBrush:function(image){
+            let brush;
+            if(image.width>context.canvas.width||image.height>context.canvas.height){
+                let $canvas = document.createElement('canvas');
+                let contextTemp = $canvas.getContext('2d');
+                if(image.width>context.canvas.width){
+                    $canvas.width = context.canvas.width;
+                    $canvas.height = image.height/image.width*context.canvas.width;
+                }else{
+                    $canvas.width = image.width/image.height*context.canvas.height;
+                    $canvas.height = context.canvas.height;
+                }
+                contextTemp.drawImage(image,0,0,$canvas.width,$canvas.height);
+                brush = context.createPattern($canvas,'repeat');
+            }else{
+                brush = context.createPattern(image,'repeat');
+            }
+            return brush;
+        },
+        // 绘制角
+        drawRightAngle:function(x, y, dir, pxWidth) {
+            let cx, cy;
+            switch (dir) {
+                case 0:
+                    cx = x * pxWidth;
+                    cy = y * pxWidth;
+                    context.lineTo(cx, cy);
+                    break;
+                case 1:
+                    cx = x * pxWidth + pxWidth;
+                    cy = y * pxWidth;
+                    context.lineTo(cx, cy);
+                    break;
+                case 2:
+                    cx = x * pxWidth + pxWidth;
+                    cy = y * pxWidth + pxWidth;
+                    context.lineTo(cx, cy);
+                    break;
+                case 3:
+                    cx = x * pxWidth;
+                    cy = y * pxWidth + pxWidth;
+                    context.lineTo(cx, cy);
+                    break;
+            }
+        },
+        // 绘制角补角
+        drawRoundBrick:function(x, y, dir, pxWidth) {
+            let round = pxWidth/2;
+            let cx, cy;
+            switch (dir) {
+                case 0:
+                    cx = x * pxWidth + round;
+                    cy = y * pxWidth + round;
+                    context.arc(cx, cy, round, Math.PI, Math.PI * 1.5, false);
+                    break;
+              case 1:
+                    cx = x * pxWidth + pxWidth - round;
+                    cy = y * pxWidth + round;
+                    context.arc(cx, cy, round, Math.PI * 1.5, Math.PI * 2, false);
+                    break;
+              case 2:
+                    cx = x * pxWidth + pxWidth - round;
+                    cy = y * pxWidth + pxWidth - round;
+                    context.arc(cx, cy, round, 0, Math.PI / 2, false);
+                    break;
+              case 3:
+                    cx = x * pxWidth + round;
+                    cy = y * pxWidth + pxWidth - round;
+                    context.arc(cx, cy, round, Math.PI / 2, Math.PI, false);
+                    break;
+            }
+        },
+        // 填充圆
+        fillRound:function(x, y, dir, pxWidth) {
+            let round = pxWidth/2;
+            let cx, cy;
+            context.beginPath();
+            switch (dir) {
+                case 0:
+                    cx = x * pxWidth + round;
+                    cy = y * pxWidth + round;
+                    context.arc(cx, cy, round, Math.PI, Math.PI * 1.5, false);
+                    cx = x * pxWidth;
+                    cy = y * pxWidth;
+                    break;
+                case 1:
+                    cx = x * pxWidth + pxWidth - round;
+                    cy = y * pxWidth + round;
+                    context.arc(cx, cy, round, Math.PI * 1.5, Math.PI * 2, false);
+                    cx = x * pxWidth + pxWidth;
+                    cy = y * pxWidth;
+                    break;
+                case 2:
+                    cx = x * pxWidth + pxWidth - round;
+                    cy = y * pxWidth + pxWidth - round;
+                    context.arc(cx, cy, round, 0, Math.PI / 2, false);
+                    cx = x * pxWidth + pxWidth;
+                    cy = y * pxWidth + pxWidth;
+                    break;
+                case 3:
+                    cx = x * pxWidth + round;
+                    cy = y * pxWidth + pxWidth - round;
+                    context.arc(cx, cy, round, Math.PI / 2, Math.PI, false);
+                    cx = x * pxWidth;
+                    cy = y * pxWidth + pxWidth;
+                    break;
+                default:
+            }
+            context.lineTo(cx, cy);
+            context.closePath();
+            context.fill();
+            context.stroke();
         }
     };
 };

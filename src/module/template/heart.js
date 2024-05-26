@@ -7,17 +7,6 @@ export default function(context,data,options){
     let x = margin;
     let y = margin;
     let api = getAPI(context,data,options);
-    let drawItem = function(x,y,pxWidth){
-        let unit = pxWidth*0.6;
-        let unit_p = pxWidth*0.55;
-        context.beginPath();
-        for (let n = 0; n < 5; n++) {
-            context.lineTo(x+Math.cos((18+n*72)/180*Math.PI)*unit+unit_p,y-Math.sin((18+n*72)/180*Math.PI)*unit+unit_p);
-            context.lineTo(x+Math.cos((54+n*72)/180*Math.PI)*0.4*unit+unit_p,y-Math.sin((54+n*72)/180*Math.PI)*0.4*unit+unit_p);
-        }
-        context.closePath();
-        context.fill();
-    };
     let resourcesMap = {};
     if(options.foregroundImage){
         resourcesMap['foregroundImage'] = options.foregroundImage;
@@ -43,16 +32,14 @@ export default function(context,data,options){
             context.fillRect(0,0,context.canvas.width,context.canvas.height);
         }
         context.restore();
-        context.save();
-        context.translate(x,y);
+        let unit = pxWidth;
         for(let i=0;i<len;i++){
             for(let j=0;j<len;j++){
                 if(api.getValue(i,j)==1){
+                    context.save();
                     if(api.isPositionPoint(i,j)==1){
                         context.fillStyle = innerColor;
                     }else if(api.isPositionPoint(i,j)==2){
-                        let color = colors[(i+j)%colors.length];
-                        let outerColor = options.outerColor||color;
                         context.fillStyle = outerColor;
                     }else{
                         let color = colors[(i+j)%colors.length];
@@ -62,17 +49,41 @@ export default function(context,data,options){
                         context.fillStyle = color;
                     }
                     if(api.getRangeTrue(i,j,3,3)){
-                        drawItem(i*pxWidth-0.55*pxWidth,j*pxWidth-0.45*pxWidth,3.8*pxWidth);
+                        unit = 0.8*pxWidth;
+                        context.translate(x+(i+1.5)*pxWidth,y+(j+1.1)*pxWidth);
+                        context.beginPath();
+                        context.arc(-unit,0,unit,Math.PI,0,false);
+                        context.arc(unit,0,unit,Math.PI,0,false); //貝塞尔曲线画心
+                        context.bezierCurveTo(1.9*unit, 1.2*unit, 0.6*unit, 1.6*unit, 0, 3.0*unit);
+                        context.bezierCurveTo(-0.6*unit, 1.6*unit,-1.9*unit, 1.2*unit,-2*unit,0);
+                        context.closePath();
+                        context.fill();
                         api.setRangeDisabled(i,j,3,3);
                     }else if(api.getRangeTrue(i,j,2,2)){
-                        drawItem(i*pxWidth-0.15*pxWidth,j*pxWidth-0.12*pxWidth,2*pxWidth);
+                        unit = 0.5*pxWidth;
+                        context.translate(x+(i+1)*pxWidth,y+(j+0.9)*pxWidth);
+                        context.beginPath();
+                        context.arc(-unit,0,unit,Math.PI,0,false);
+                        context.arc(unit,0,unit,Math.PI,0,false); //貝塞尔曲线画心
+                        context.bezierCurveTo(1.9*unit, 1.2*unit, 0.6*unit, 1.6*unit, 0, 3.0*unit);
+                        context.bezierCurveTo(-0.6*unit, 1.6*unit,-1.9*unit, 1.2*unit,-2*unit,0);
+                        context.closePath();
+                        context.fill();
                         api.setRangeDisabled(i,j,2,2);
                     }else{
-                        drawItem(i*pxWidth,j*pxWidth,pxWidth);
+                        unit = 0.25*pxWidth;
+                        context.translate(x+(i+0.5)*pxWidth,y+(j+0.5)*pxWidth);
+                        context.beginPath();
+                        context.arc(-unit,0,unit,Math.PI,0,false);
+                        context.arc(unit,0,unit,Math.PI,0,false); //貝塞尔曲线画心
+                        context.bezierCurveTo(1.9*unit, 1.2*unit, 0.6*unit, 1.6*unit, 0, 3.0*unit);
+                        context.bezierCurveTo(-0.6*unit, 1.6*unit,-1.9*unit, 1.2*unit,-2*unit,0);
+                        context.closePath();
+                        context.fill();
                     }
+                    context.restore();
                 }
             }
         }
-        context.restore();
     });
-};
+}

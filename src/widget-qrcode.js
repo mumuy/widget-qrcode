@@ -7,7 +7,7 @@ class WidgetQRCode extends HTMLElement {
         super();
     }
     static get observedAttributes(){
-        return ['value','template','level','width','height'];
+        return ['value','template','level','width','height','logo','foreground-image','background-image','foreground-color','background-color','inner-color','outer-color'];
     }
     get value(){
         return this.getAttribute('value')||'https://passer-by.com/';
@@ -24,8 +24,29 @@ class WidgetQRCode extends HTMLElement {
     get height(){
         return +this.getAttribute('height')||0;
     }
+    get logo(){
+        return this.getAttribute('logo')||'';
+    }
+    get foregroundImage(){
+        return this.getAttribute('foreground-image')||'';
+    }
+    get backgroundImage(){
+        return this.getAttribute('background-image')||'';
+    }
+    get foregroundColor(){
+        return this.getAttribute('foreground-color')||'';
+    }
+    get backgroundColor(){
+        return this.getAttribute('background-color')||'';
+    }
+    get innerColor(){
+        return this.getAttribute('inner-color')||'';
+    }
+    get outerColor(){
+        return this.getAttribute('outer-color')||'';
+    }
     attributeChangedCallback(name, oldValue, newValue){
-        if(name=='value'&&oldValue!=newValue){
+        if(oldValue!=newValue){
             this.context&&this.drawQRCode();
         }
     }
@@ -46,19 +67,23 @@ class WidgetQRCode extends HTMLElement {
             $style.textContent = [defaultSheet.cssRules,...styleSheet.cssRules].map(item=>item.cssText).join('');
             _.shadowRoot.appendChild($style);
         }
-
         // 节点
         _.render();
         _.drawQRCode();
-
+        // 自适应
         _.addEventListener('resize',function(){
             _.resize();
         },false);
+        // 修复切换tab画布被清空问题
+        document.addEventListener('visibilitychange',function(){
+            _.drawQRCode();
+        });
     }
     render(parser){
         let _ = this;
         _.shadowRoot.innerHTML = `<div class="mod-qrcode">
             <canvas></canvas>
+            <div class="logo"></div>
         </div>`;
         _.$module = _.shadowRoot.querySelector('.mod-qrcode');
         _.$canvas = _.$module.querySelector('canvas');
@@ -74,16 +99,33 @@ class WidgetQRCode extends HTMLElement {
     }
     resize(){
         let _ = this;
-        let clientSize = Math.max(_.clientWidth,_.clientHeight);
-        _.$canvas.width = clientSize*2;
-        _.$canvas.height = clientSize*2;
-        _.drawQRCode();
+        let style = window.getComputedStyle(_);
+        if(style.width&&style.height){
+            let clientSize = Math.max(parseInt(style.width),parseInt(style.height));
+            _.$canvas.width = clientSize*2;
+            _.$canvas.height = clientSize*2;
+            _.drawQRCode();
+        }
     }
     drawQRCode(){
         let _ = this;
-        let data = QRCode(_.value, _.level);
+        let level = _.level;
+        if(_.logo){
+            level = 'H';
+            _.$module.querySelector('.logo').style = `background: url(${_.logo}) center center/ 25% 25% no-repeat;`;
+        }else{
+            _.$module.querySelector('.logo').style = ``;
+        }
+        let data = QRCode(_.value, level);
         _.context.clearRect(0,0,_.$canvas.width,_.$canvas.height);
-        (Draw[_.template]||Draw['default'])(_.context, data, {});
+        (Draw[_.template]||Draw['default'])(_.context, data, {
+            'foregroundImage':_.foregroundImage,
+            'backgroundImage':_.backgroundImage,
+            'foregroundColor':_.foregroundColor,
+            'backgroundColor':_.backgroundColor,
+            'innerColor':_.innerColor,
+            'outerColor':_.outerColor
+        });
     }
 }
 

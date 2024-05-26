@@ -44,7 +44,7 @@
                     <div class="inner">
                         <div class="hd">
                             <h1>二维码组件<span class="tag">开源算法</span></h1>
-                            <p>仅需一个标签，即可让二维码图片随内容实时变动！让二维码展示更加丝滑~</p>
+                            <p>仅需一个HTML标签，即可获得独具个性的二维码！图案随内容实时变化，让二维码更多彩~</p>
                         </div>
                         <div class="bd">
                             <div class="view-box">
@@ -56,7 +56,7 @@
                                         <span class="title">自定义标签</span>
                                     </div>
                                     <div class="c-bd">
-                                        <code>&lt;widget-qrcode text="[二维码内容]"&gt;&lt;/widget-qrcode&gt;</code>
+                                        <code>&lt;widget-qrcode value="[二维码内容]"&gt;&lt;/widget-qrcode&gt;</code>
                                     </div>
                                 </div>
                                 <div class="box">
@@ -64,9 +64,104 @@
                                         <span class="title">实时演示</span>
                                     </div>
                                     <div class="c-bd">
-                                        <input type="search" placeholder="请在此输入二维码内容" maxlength="48"/>
+                                        <div class="input-wrapper">
+                                            <div class="input-title"><span>文本内容</span></div>
+                                            <div class="input-content">
+                                                <input type="search" name="value" placeholder="请在此输入二维码内容" maxlength="48"/>
+                                            </div>
+                                        </div>
+                                        <div class="input-wrapper">
+                                            <div class="input-title"><span>风格模板</span></div>
+                                            <div class="input-content">
+                                                <label>
+                                                    <input type="radio" name="template" value="default" checked="checked"/>
+                                                    <span>默认</span>
+                                                </label>
+                                                <label>
+                                                    <input type="radio" name="template" value="water"/>
+                                                    <span>液态</span>
+                                                </label>
+                                                <label>
+                                                    <input type="radio" name="template" value="diamond"/>
+                                                    <span>菱形</span>
+                                                </label>
+                                                <label>
+                                                    <input type="radio" name="template" value="hexagon"/>
+                                                    <span>六边形</span>
+                                                </label>
+                                                <label>
+                                                    <input type="radio" name="template" value="star"/>
+                                                    <span>星星</span>
+                                                </label>
+                                                <label>
+                                                    <input type="radio" name="template" value="rect"/>
+                                                    <span>方块</span>
+                                                </label>
+                                                <label>
+                                                    <input type="radio" name="template" value="bar"/>
+                                                    <span>条形</span>
+                                                </label>
+                                                <label>
+                                                    <input type="radio" name="template" value="heart"/>
+                                                    <span>心形</span>
+                                                </label>
+                                                <label>
+                                                    <input type="radio" name="template" value="glitter"/>
+                                                    <span>闪烁</span>
+                                                </label>
+                                                <label>
+                                                    <input type="radio" name="template" value="fusion"/>
+                                                    <span>融合</span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="input-wrapper">
+                                            <div class="input-title"><span>颜色方案</span></div>
+                                            <div class="input-content">
+                                                <label>
+                                                    <input type="color" name="foreground-color" value="#000000"/>
+                                                    <span>前景</span>
+                                                </label>
+                                                <label>
+                                                    <input type="color" name="background-color" value="#ffffff"/>
+                                                    <span>背景</span>
+                                                </label>
+                                                <label>
+                                                    <input type="color" name="inner-color" value=""/>
+                                                    <span>定位内框</span>
+                                                </label>
+                                                <label>
+                                                    <input type="color" name="outer-color" value=""/>
+                                                    <span>定位外框</span>
+                                                </label>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
+                            </div>
+                        </div>
+                        <div class="ft">
+                            <div class="table-inner">
+                                <table>
+                                    <caption><h3>组件属性</h3></caption>
+                                    <thead>
+                                        <tr><th>属性</th><th>说明</th></tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr><td>value</td><td>二维码内容</td></tr>
+                                        <tr><td>template</td><td>样式模板,可选：'default','water','diamond','hexagon','star','rect','bar','heart','glitter','fusion'</td></tr>
+                                        <tr><td>level</td><td>纠错等级,可选：'M','L','Q','H'</td></tr>
+                                        <tr><td>width</td><td>二维码宽度，默认：300</td></tr>
+                                        <tr><td>height</td><td>二维码高度，默认：300</td></tr>
+                                        <tr><td>logo</td><td>logo图片地址</td></tr>
+                                        <tr><td>background-image</td><td>背景图片地址</td></tr>
+                                        <tr><td>foreground-image</td><td>前景图片地址</td></tr>
+                                        <tr><td>background-color</td><td>背景色，默认：#ffffff</td></tr>
+                                        <tr><td>foreground-color</td><td>前景色，默认：#000000;（多色用逗号分隔）</td></tr>
+                                        <tr><td>inner-color</td><td>定位点内层颜色，默认：#000000</td></tr>
+                                        <tr><td>outer-color</td><td>定位点外层颜色，默认：#000000</td></tr>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
@@ -74,16 +169,31 @@
                 <script type="text/javascript">
                     let $module = document.querySelector('.mod-panel');
                     let $qrcode = $module.querySelector('widget-qrcode');
-                    let $input = $module.querySelector('input');
-                    let hander = null;
-                    $input.addEventListener('input',function(){
-                        let value = this.value.trim();
-                        hander&&clearTimeout(hander);
-                        hander = setTimeout(function(){
-                            $qrcode.setAttribute('value',value);
-                        },250);
-                    },false);
+                    ['value','template','foreground-color','background-color','inner-color','outer-color'].forEach(function(field){
+                        $module.querySelectorAll('input[name="'+field+'"]').forEach(function($item){
+                            $item.addEventListener('input',function(){
+                                $qrcode.setAttribute(field,this.value);
+                            },false);
+                        });
+                    });
                 </script>
+                <div class="inner">
+                    <div class="mod-sample">
+                        <div class="hd"><span class="title">样例展示</span></div>
+                        <div class="bd">
+                            <widget-qrcode template="fusion" level="M" background-image="./static/image/bg/girl.jpeg" background-color="#ffcc60"></widget-qrcode>
+                            <widget-qrcode template="fusion" background-image="./static/image/bg/monkey.jpeg" background-color="#ece8dd" foreground-color="#000000"></widget-qrcode>
+                            <widget-qrcode template="diamond" foreground-image="./static/image/skin/lowploy.jpg" background-color="#f1f8ff"></widget-qrcode>
+                            <widget-qrcode template="heart" logo="./static/image/logo/octopus.png" foreground-color="#ff9999" background-color="#fff7f7" inner-color="#ce5050"></widget-qrcode>
+                            <widget-qrcode template="hexagon" foreground-color="#17252a,#2b7a78,#3aafa9" background-color="#def2f1" inner-color="#17252a"></widget-qrcode>
+                            <widget-qrcode template="bar" foreground-color="#3b8686,#79bd9a,#f8ca00,#008c9e" background-color="#f0f5f9" inner-color="#3B4E32"></widget-qrcode>
+                            <widget-qrcode template="glitter" foreground-color="#fe4365,#fc9d9a,#6d9d88,#490a3d" background-color="#f9f1f1" inner-color="#881600" outer-color="#343838"></widget-qrcode>
+                            <widget-qrcode template="water" logo="./static/image/logo/earth.png" foreground-color="#6d327c,#485DA6,#00a1ba,#00BF98,#36C486" background-color="#f1f8ff" inner-color="#845EC2"></widget-qrcode>
+                            <widget-qrcode template="diamond" logo="./static/image/logo/snail.png" foreground-image="./static/image/skin/grass.png" background-color="#fff2dc" inner-color="#094304"></widget-qrcode>
+                            <widget-qrcode template="star" level="L" foreground-color="#fc9000,#ffa935,#ffb756" background-color="#034690"></widget-qrcode>
+                        </div>
+                    </div>
+                </div>
                 <div class="mod-article">
 					<div class="inner">
 						<div class="bd">
@@ -95,7 +205,8 @@
 					<div class="inner">
 						<div class="hd"><span>算法开源</span></div>
 						<div class="bd">
-							<p><span>算法基于「<a href="https://github.com/mumuy/widget-qrcode/blob/master/LICENSE" rel="nofollow" target="_blank">MIT许可协议</a>」开源，除需在源码中保留版权信息和许可声明外，你有权利使用、复制、修改、合并、出版发行、散布、再授权及贩售软件及软件的副本。</span>数据持续更新中，如发现错漏或有想法建议可在此</span> <a class="text-red" href="https://github.com/mumuy/widget-qrcode/issues" rel="nofollow" target="_blank">反馈问题</a>。</p>
+                            <p>本项目致力于让你网站中的二维码更加丰富多彩，开发使用便捷高效。本人深感项目的完善仅凭一己之力是远远不够的，如果你对此感兴趣，欢迎关注本项目 或 <a class="text-blue" href="https://github.com/mumuy/widget-qrcode/pulls" target="_blank" rel="nofollow">提交代码</a>，与我一起完善它，使它被更多人熟知和使用。你也可以将自己配置的二维码参数分享给我，有机会让更多人看到你的设计！</p>
+							<p><span>算法基于「<a href="https://github.com/mumuy/widget-qrcode/blob/master/LICENSE" rel="nofollow" target="_blank">MIT许可协议</a>」开源，除需在源码中保留版权信息和许可声明外，你有权利使用、复制、修改、合并、出版发行、散布、再授权及贩售软件及软件的副本。</span>算法持续更新中，如发现错漏或有想法建议可在此</span> <a class="text-red" href="https://github.com/mumuy/widget-qrcode/issues" rel="nofollow" target="_blank">反馈问题</a>。</p>
 							<div class="buttons">
 								<a class="github-button" href="https://github.com/mumuy" data-color-scheme="no-preference: light; light: light; dark: dark;" data-size="large" aria-label="Follow @mumuy on GitHub">Follow @mumuy</a>
 								<a class="github-button" href="https://github.com/mumuy/widget-qrcode/fork" data-color-scheme="no-preference: light; light: light; dark: dark;" data-icon="octicon-repo-forked" data-size="large" data-show-count="true" aria-label="Fork mumuy/widget-qrcode on GitHub">Fork</a>

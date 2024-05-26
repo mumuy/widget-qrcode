@@ -7,17 +7,6 @@ export default function(context,data,options){
     let x = margin;
     let y = margin;
     let api = getAPI(context,data,options);
-    let drawItem = function(x,y,pxWidth){
-        let unit = pxWidth*0.6;
-        let unit_p = pxWidth*0.55;
-        context.beginPath();
-        for (let n = 0; n < 5; n++) {
-            context.lineTo(x+Math.cos((18+n*72)/180*Math.PI)*unit+unit_p,y-Math.sin((18+n*72)/180*Math.PI)*unit+unit_p);
-            context.lineTo(x+Math.cos((54+n*72)/180*Math.PI)*0.4*unit+unit_p,y-Math.sin((54+n*72)/180*Math.PI)*0.4*unit+unit_p);
-        }
-        context.closePath();
-        context.fill();
-    };
     let resourcesMap = {};
     if(options.foregroundImage){
         resourcesMap['foregroundImage'] = options.foregroundImage;
@@ -51,8 +40,6 @@ export default function(context,data,options){
                     if(api.isPositionPoint(i,j)==1){
                         context.fillStyle = innerColor;
                     }else if(api.isPositionPoint(i,j)==2){
-                        let color = colors[(i+j)%colors.length];
-                        let outerColor = options.outerColor||color;
                         context.fillStyle = outerColor;
                     }else{
                         let color = colors[(i+j)%colors.length];
@@ -61,14 +48,31 @@ export default function(context,data,options){
                         }
                         context.fillStyle = color;
                     }
-                    if(api.getRangeTrue(i,j,3,3)){
-                        drawItem(i*pxWidth-0.55*pxWidth,j*pxWidth-0.45*pxWidth,3.8*pxWidth);
-                        api.setRangeDisabled(i,j,3,3);
-                    }else if(api.getRangeTrue(i,j,2,2)){
-                        drawItem(i*pxWidth-0.15*pxWidth,j*pxWidth-0.12*pxWidth,2*pxWidth);
-                        api.setRangeDisabled(i,j,2,2);
+                    if(api.isPositionPoint(i,j)){
+                        context.fillRect(i*pxWidth,j*pxWidth,7*pxWidth,7*pxWidth);
+                        context.fillStyle = backgroundColor;
+                        context.fillRect(i*pxWidth+pxWidth,j*pxWidth+pxWidth,5*pxWidth,5*pxWidth);
+                        context.fillStyle = innerColor;
+                        context.beginPath();
+                        context.moveTo(i*pxWidth+3.5*pxWidth,j*pxWidth+pxWidth);
+                        context.lineTo(i*pxWidth+6*pxWidth,j*pxWidth+3.5*pxWidth);
+                        context.lineTo(i*pxWidth+3.5*pxWidth,j*pxWidth+6*pxWidth);
+                        context.lineTo(i*pxWidth+pxWidth,j*pxWidth+3.5*pxWidth);
+                        context.closePath();
+                        context.fill();
+                        api.setRangeDisabled(i,j,7,7);
                     }else{
-                        drawItem(i*pxWidth,j*pxWidth,pxWidth);
+                        if((i+j)%2){
+                            context.beginPath();
+                            context.moveTo(i*pxWidth+0.5*pxWidth,j*pxWidth);
+                            context.lineTo(i*pxWidth+pxWidth,j*pxWidth+0.5*pxWidth);
+                            context.lineTo(i*pxWidth+0.5*pxWidth,j*pxWidth+pxWidth);
+                            context.lineTo(i*pxWidth,j*pxWidth+0.5*pxWidth);
+                            context.closePath();
+                            context.fill();
+                        }else{
+                            context.fillRect(i*pxWidth,j*pxWidth,pxWidth,pxWidth);
+                        }
                     }
                 }
             }
