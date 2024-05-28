@@ -214,6 +214,26 @@ export default function(context,data,options) {
             context.closePath();
             context.fill();
             context.stroke();
+        },
+        setText(){
+            if(options.text){
+                let fontSize = Math.ceil(context.canvas.height/12.5);
+                let lineWidth = Math.ceil(context.canvas.height/50);
+                context.textAlign = 'center';
+                context.textBaseline = 'middle';
+                context.font = `bold ${fontSize}px 微软雅黑`;
+                context.lineWidth = lineWidth;
+                context.strokeStyle = options.textStroke||'#ffffff';
+                context.strokeText(options.text,context.canvas.width/2,context.canvas.height/2);
+                context.fillStyle = options.textColor||'#000000';
+                context.fillText(options.text,context.canvas.width/2,context.canvas.height/2);
+            }
+        },
+        setLogo(image){
+            let logoSize = Math.ceil(context.canvas.width/4);
+            let x = (context.canvas.width-logoSize)/2;
+            let y = (context.canvas.height-logoSize)/2;
+            context.drawImage(image,x,y,logoSize,logoSize);
         }
     };
 };

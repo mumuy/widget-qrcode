@@ -7,7 +7,7 @@ class WidgetQRCode extends HTMLElement {
         super();
     }
     static get observedAttributes(){
-        return ['value','template','level','width','height','logo','foreground-image','background-image','foreground-color','background-color','inner-color','outer-color'];
+        return ['value','template','level','width','height','logo','text','text-color','text-stroke','foreground-image','background-image','foreground-color','background-color','inner-color','outer-color'];
     }
     get value(){
         return this.getAttribute('value')||'https://passer-by.com/';
@@ -26,6 +26,15 @@ class WidgetQRCode extends HTMLElement {
     }
     get logo(){
         return this.getAttribute('logo')||'';
+    }
+    get text(){
+        return this.getAttribute('text')||'';
+    }
+    get textColor(){
+        return this.getAttribute('text-color')||'';
+    }
+    get textStroke(){
+        return this.getAttribute('text-stroke')||'';
     }
     get foregroundImage(){
         return this.getAttribute('foreground-image')||'';
@@ -85,7 +94,6 @@ class WidgetQRCode extends HTMLElement {
         let _ = this;
         _.shadowRoot.innerHTML = `<div class="mod-qrcode">
             <canvas></canvas>
-            <div class="logo"></div>
         </div>`;
         _.$module = _.shadowRoot.querySelector('.mod-qrcode');
         _.$canvas = _.$module.querySelector('canvas');
@@ -111,13 +119,7 @@ class WidgetQRCode extends HTMLElement {
     }
     drawQRCode(){
         let _ = this;
-        let level = _.level;
-        if(_.logo){
-            level = 'H';
-            _.$module.querySelector('.logo').style = `background: url(${_.logo}) center center/ 25% 25% no-repeat;`;
-        }else{
-            _.$module.querySelector('.logo').style = ``;
-        }
+        let level =_.logo:'H':_.level;
         let data = QRCode(_.value, level);
         _.context.clearRect(0,0,_.$canvas.width,_.$canvas.height);
         (Draw[_.template]||Draw['default'])(_.context, data, {
@@ -126,7 +128,11 @@ class WidgetQRCode extends HTMLElement {
             'foregroundColor':_.foregroundColor,
             'backgroundColor':_.backgroundColor,
             'innerColor':_.innerColor,
-            'outerColor':_.outerColor
+            'outerColor':_.outerColor,
+            'logo':_.logo,
+            'text':_.text,
+            'textColor':_.textColor,
+            'textStroke':_.textStroke
         });
     }
 }

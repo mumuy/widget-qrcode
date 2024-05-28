@@ -14,6 +14,9 @@ export default function(context,data,options){
     if(options.backgroundImage){
         resourcesMap['backgroundImage'] = options.backgroundImage;
     }
+    if(options.logo){
+        resourcesMap['logo'] = options.logo;
+    }
     api.imageReady(resourcesMap).then(function(resources){
         let backgroundColor = options.backgroundColor||'#ffffff';
         let foregroundColor = options.foregroundColor||'#000000';
@@ -55,6 +58,12 @@ export default function(context,data,options){
                     context.fillRect(Math.ceil(i*pxWidth)-0.5,Math.ceil(j*pxWidth)-0.5,Math.ceil(pxWidth)+1,Math.ceil(pxWidth)+1);
                 }
             }
+        }
+        context.restore();
+        context.save();
+        api.setText();
+        if(resources.logo){
+            api.setLogo(resources.logo);
         }
         context.restore();
     });
