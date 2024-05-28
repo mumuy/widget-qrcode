@@ -119,7 +119,7 @@ class WidgetQRCode extends HTMLElement {
     }
     drawQRCode(){
         let _ = this;
-        let level =_.logo:'H':_.level;
+        let level =_.logo?'H':_.level;
         let data = QRCode(_.value, level);
         _.context.clearRect(0,0,_.$canvas.width,_.$canvas.height);
         (Draw[_.template]||Draw['default'])(_.context, data, {
