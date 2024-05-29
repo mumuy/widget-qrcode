@@ -29,7 +29,7 @@ export default function(context,data,options){
         let outerColor = options.outerColor||foregroundImage;
         let backgroundImage = backgroundColor;
         if(!options.backgroundColor&&resources.backgroundImage){
-            backgroundImage = context.drawImage(resources.backgroundImage,0,0,context.canvas.width,context.canvas.height);
+            backgroundImage = api.getImageBrush(resources.backgroundImage);
         }
         context.save();
         context.fillStyle = backgroundImage;
@@ -53,7 +53,7 @@ export default function(context,data,options){
                     }
                     if(api.isPositionPoint(i,j)){
                         context.fillRect(i*pxWidth,j*pxWidth,7*pxWidth,7*pxWidth);
-                        context.fillStyle = backgroundColor;
+                        context.fillStyle = backgroundImage;
                         context.fillRect(i*pxWidth+pxWidth,j*pxWidth+pxWidth,5*pxWidth,5*pxWidth);
                         context.fillStyle = innerColor;
                         context.beginPath();

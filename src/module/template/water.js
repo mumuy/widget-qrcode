@@ -37,7 +37,7 @@ export default function(context,data,options){
         let outerColor = options.outerColor||foregroundImage;
         let backgroundImage = backgroundColor;
         if(!options.backgroundColor&&resources.backgroundImage){
-            backgroundImage = context.drawImage(resources.backgroundImage,0,0,context.canvas.width,context.canvas.height);
+            backgroundImage = api.getImageBrush(resources.backgroundImage);
         }
         context.save();
         context.fillStyle = backgroundImage;

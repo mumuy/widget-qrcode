@@ -29,7 +29,7 @@ export default function(context,data,options){
         let outerColor = options.outerColor||foregroundImage;
         let backgroundImage = backgroundColor;
         if(!options.backgroundColor&&resources.backgroundImage){
-            backgroundImage = context.drawImage(resources.backgroundImage,0,0,context.canvas.width,context.canvas.height);
+            backgroundImage = api.getImageBrush(resources.backgroundImage);
         }
         context.save();
         context.fillStyle = backgroundImage;
@@ -66,7 +66,7 @@ export default function(context,data,options){
                         context.arc((i+3)*pxWidth,(j+3)*pxWidth,3.5*pxWidth,0,2*Math.PI);
                         context.closePath();
                         context.fill();
-                        context.fillStyle = backgroundColor;
+                        context.fillStyle = backgroundImage;
                         context.beginPath();
                         context.arc((i+3)*pxWidth,(j+3)*pxWidth,2.5*pxWidth,0,2*Math.PI);
                         context.closePath();
