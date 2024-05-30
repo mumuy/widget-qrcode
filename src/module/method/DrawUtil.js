@@ -1,4 +1,5 @@
 // 条件判断API
+let imageCache = {};
 export default function(context,data,options) {
     return {
         // 图片加载
@@ -6,14 +7,16 @@ export default function(context,data,options) {
             let result = {};
             let promoses = Object.entries(resources).map(function(item){
                 return new Promise(function(resolve){
-                    var image = new Image();
-                    image.src = item[1];
-                    if(image.width||image.height){
-                        result[item[0]] = image;
+                    let [key,src] = item;
+                    if(imageCache[src]&&imageCache[src].width){
+                        result[key] = imageCache[src];
                         resolve();
                     }else{
+                        let image = new Image();
+                        image.src = src;
                         image.onload = function(){
-                            result[item[0]] = image;
+                            result[key] = image;
+                            imageCache[src] = image;
                             resolve();
                         };
                     }
