@@ -1,23 +1,27 @@
-$('.mod-panel h1').headroom({
-    autoHide:false
-});
 
-// 标题字体调整
-(function(){
-    let $h1 = document.querySelector('.mod-panel h1');
-    let lastScrollTop = 0;
-    let offsetTop = $h1.offsetTop;
-    let resetTitle = function(){
-        let scrollTop = document.documentElement.scrollTop;
-        if(scrollTop!=lastScrollTop){
-            let fontSize = 36 - 15*Math.min(scrollTop/offsetTop,1);
-            $h1.style.fontSize = fontSize+'px';
-            lastScrollTop = scrollTop;
-        }
+if(!navigator.userAgent.includes('Mobi')){
+    $('.mod-panel h1').headroom({
+        autoHide:false
+    });
+
+    // 标题字体调整
+    (function(){
+        let $h1 = document.querySelector('.mod-panel h1');
+        let lastScrollTop = 0;
+        let offsetTop = $h1.offsetTop;
+        let resetTitle = function(){
+            let scrollTop = document.documentElement.scrollTop;
+            if(scrollTop!=lastScrollTop){
+                let fontSize = 36 - 15*Math.min(scrollTop/offsetTop,1);
+                $h1.style.fontSize = fontSize+'px';
+                lastScrollTop = scrollTop;
+            }
+            requestAnimationFrame(resetTitle);
+        };
         requestAnimationFrame(resetTitle);
-    };
-    requestAnimationFrame(resetTitle);
-})();
+    })();
+}
+
 
 // 头部滚动
 (function(){
