@@ -26,6 +26,19 @@
     </head>
     <body>
         <div class="wrapper">
+            <div class="mod-bg">
+                <svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
+                    <defs>
+                        <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z"></path>
+                    </defs>
+                    <g class="parallax">
+                        <use xlink:href="#gentle-wave" x="48" y="0" fill="rgba(255,255,255,0.4)"></use>
+                        <use xlink:href="#gentle-wave" x="48" y="3" fill="rgba(255,255,255,0.6)"></use>
+                        <use xlink:href="#gentle-wave" x="48" y="5" fill="rgba(255,255,255,0.2)"></use>
+                        <use xlink:href="#gentle-wave" x="48" y="7" fill="rgba(255,255,255,1)"></use>
+                    </g>
+                </svg>
+            </div>
             <div class="header">
                 <div class="inner">
                     <div class="mod-head">
@@ -43,7 +56,7 @@
                 <div class="mod-panel">
                     <div class="inner">
                         <div class="hd">
-                            <h1>二维码组件<span class="tag">开源算法</span></h1>
+                            <div class="title"><h1>二维码美化组件<span class="tag">开源算法</span></h1></div>
                             <p>仅需一个HTML标签，即可获得独具个性的二维码！图案随内容实时变化，让二维码更多彩~</p>
                         </div>
                         <div class="bd">
@@ -227,9 +240,22 @@
 						</div>
 					</div>
 				</div>
+                <div class="mod-fixedbar">
+                    <div class="bd">
+                        <ul>
+                            <li>
+                                <a class="gotop" href="javascript:;" href="javascript:;">
+                                    <img src="static/image/icon-gotop.png" width="24" height="24"/>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
             </div>
         </div>
         <script type="text/javascript" src="https://jquerywidget.com/public/script/jquery.min.js"></script>
+        <script type="text/javascript" src="https://jquerywidget.com/code/jquery.headroom.js"></script>
+        <script type="text/javascript" src="./static/script/index.js"></script>
         <script async defer src="https://cdn.bootcdn.net/ajax/libs/github-buttons/2.21.1/buttons.min.js"></script>
 		<script type="text/javascript" src="https://passer-by.com/public/script/projects.js"></script>
 		<script type="text/javascript" src="https://passer-by.com/public/script/stat.js"></script>

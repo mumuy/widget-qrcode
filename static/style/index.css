@@ -37,6 +37,70 @@ a:hover{
     margin: 0 auto;
 }
 
+.mod-bg {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 500px;
+    width: 100%;
+    z-index: -1;
+    background: url('../image/bg.svg') center top repeat-x;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+.mod-bg:after {
+    display: block;
+    width: 100%;
+    height: 360px;
+    content: '';
+    margin-bottom: -240px
+}
+.mod-bg .waves {
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    min-height: 80px;
+    max-height: 120px;
+    z-index: 0
+}
+.mod-bg .parallax>use {
+    animation: move-forever 25s cubic-bezier(0.55, 0.5, 0.45, 0.1) infinite
+}
+.mod-bg .parallax>use:nth-child(1) {
+    animation-delay: -2s;
+    animation-duration: 7s
+}
+.mod-bg .parallax>use:nth-child(2) {
+    animation-delay: -3s;
+    animation-duration: 10s
+}
+.mod-bg .parallax>use:nth-child(3) {
+    animation-delay: -4s;
+    animation-duration: 13s
+}
+.mod-bg .parallax>use:nth-child(4) {
+    animation-delay: -5s;
+    animation-duration: 20s
+}
+@keyframes move-forever {
+    0% {
+        transform: translate3d(-90px, 0, 0)
+    }
+    100% {
+        transform: translate3d(85px, 0, 0)
+    }
+}
+
+.header{
+    position: sticky;
+    left: 0;
+    top: 0;
+    width: 100%;
+    z-index: 99;
+    backdrop-filter: blur(10px);
+}
 .mod-head .bd{
     height: 36px;
     padding: 10px 0;
@@ -98,9 +162,14 @@ a:hover{
     padding: 35px 0;
 	line-height: 22px;
 }
+.mod-panel .hd .title{
+    width: 50%;
+}
 .mod-panel .hd h1{
-    margin-bottom: 10px;
-	line-height: 48px;
+    position: relative;
+    z-index: 99;
+    background-color: rgba(255,255,255,0);
+	line-height: 56px;
     font-weight: bold;
 	font-size: 36px;
 	color:#1a2b3b;
@@ -506,6 +575,38 @@ a:hover{
 }
 .mod-foot p{
     line-height: 30px;
+}
+
+.mod-fixedbar .bd {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+}
+.mod-fixedbar .bd a{
+    position: relative;
+    display: block;
+    width: 48px;
+    height: 48px;
+    margin-bottom: 2px;
+    background: rgba(255,255,255,0.8);
+    border: 1px solid #f0f0f0;
+    line-height: 48px;
+    text-align: center;
+}
+.mod-fixedbar .bd .popup{
+    display: none;
+    position: absolute;
+    right: 50px;
+    bottom: 0;
+    z-index: 99;
+    border: 1px solid #f0f0f0;
+    box-shadow: 0 0 2px 0 rgba(0,0,0,0.05);
+}
+.mod-fixedbar .bd a:hover{
+    background: rgba(255,255,255,0.9);
+}
+.mod-fixedbar .bd a:hover .popup{
+    display: block;
 }
 
 @media screen and (max-width: 1020px) {
