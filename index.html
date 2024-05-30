@@ -202,7 +202,7 @@
                         </div>
                         <div class="bd">
                             <widget-qrcode template="fusion" level="M" background-image="./static/image/bg/girl.jpeg" background-color="#ffcc60"></widget-qrcode>
-                            <widget-qrcode template="fusion" background-image="./static/image/bg/monkey.jpeg" background-color="#ece8dd" foreground-color="#000000" text="Now You See Me" text-color="#2c2b2e" text-stroke="#ece8dd"></widget-qrcode>
+                            <widget-qrcode id="show" template="fusion" background-image="./static/image/bg/monkey.jpeg" background-color="#ece8dd" foreground-color="#000000" text="" text-color="#2c2b2e" text-stroke="#ece8dd"></widget-qrcode>
                             <widget-qrcode template="diamond" logo="./static/image/logo/snail.png" foreground-image="./static/image/skin/grass.png" background-color="#fff2dc" inner-color="#094304"></widget-qrcode>
                             <widget-qrcode template="water" logo="./static/image/logo/earth.png" foreground-color="#6d327c,#485DA6,#00a1ba,#00BF98,#36C486" background-color="#f1f8ff" inner-color="#845EC2"></widget-qrcode>
                             <widget-qrcode template="heart" logo="./static/image/logo/octopus.png" foreground-color="#ff9999" background-color="#fff7f7" inner-color="#ce5050"></widget-qrcode>
@@ -212,6 +212,59 @@
                             <widget-qrcode template="rect" foreground-color="#4abdac,#fc4a1a,#f7b733" background-color="#f9f6f3" inner-color="#d66c44" outer-color="#037584"></widget-qrcode>
                             <widget-qrcode template="star" level="L" foreground-color="#fc9000,#ffa935,#ffb756" background-color="#034690"></widget-qrcode>
                         </div>
+                        <script type="text/javascript">
+                            let $show = document.querySelector('widget-qrcode#show');
+                            let list = [
+                                {'value':'','time':100,'interval':500,'action':function(){}},
+                                {'value':'Now You See Me','time':100,'interval':1000,'action':function(){}},
+                                {'value':'','time':100,'interval':500,'action':function(){}},
+                                {'value':'Wait a minute','time':75,'interval':500,'action':function(){}},
+                                {'value':'','time':100,'interval':500,'action':function(){}},
+                                {'value':'Please!','time':75,'interval':500,'action':function(){}},
+                                {'value':'','time':100,'interval':500,'action':function(){}},
+                                {'value':'我要表演了','time':150,'interval':500,'action':function(){}},
+                                {'value':'','time':100,'interval':500,'action':function(){}},
+                                {'value':'注意咯','time':150,'interval':500,'action':function(){}},
+                                {'value':'','time':100,'interval':500,'action':function(){}},
+                                {'value':'动次','time':25,'interval':250,'action':function(){$show.setAttribute('inner-color','#fc9000');$show.setAttribute('outer-color','#000000');}},
+                                {'value':'','time':25,'interval':250,'action':function(){}},
+                                {'value':'打次','time':25,'interval':250,'action':function(){$show.setAttribute('inner-color','#000000');$show.setAttribute('outer-color','#fc9000');}},
+                                {'value':'','time':25,'interval':250,'action':function(){}},
+                                {'value':'动次','time':25,'interval':250,'action':function(){$show.setAttribute('inner-color','#fc9000');$show.setAttribute('outer-color','#000000');}},
+                                {'value':'','time':25,'interval':250,'action':function(){}},
+                                {'value':'打次','time':25,'interval':250,'action':function(){$show.setAttribute('inner-color','#000000');$show.setAttribute('outer-color','#fc9000');}},
+                                {'value':'','time':25,'interval':250,'action':function(){}},
+                                {'value':'动次','time':25,'interval':250,'action':function(){$show.setAttribute('inner-color','#fc9000');$show.setAttribute('outer-color','#000000');$show.setAttribute('foreground-color','#fc9000');}},
+                                {'value':'','time':25,'interval':250,'action':function(){}},
+                                {'value':'打次','time':25,'interval':250,'action':function(){$show.setAttribute('inner-color','#000000');$show.setAttribute('outer-color','#fc9000');$show.setAttribute('foreground-color','#000000');}},
+                                {'value':'','time':25,'interval':250,'action':function(){}},
+                                {'value':'动次','time':25,'interval':250,'action':function(){$show.setAttribute('inner-color','#fc9000');$show.setAttribute('outer-color','#000000');$show.setAttribute('foreground-color','#fc9000');}},
+                                {'value':'','time':25,'interval':250,'action':function(){}},
+                                {'value':'打次','time':25,'interval':250,'action':function(){$show.setAttribute('inner-color','#000000');$show.setAttribute('outer-color','#fc9000');$show.setAttribute('foreground-color','#000000');}},
+                                {'value':'','time':100,'interval':250,'action':function(){$show.setAttribute('inner-color','#000000');$show.setAttribute('outer-color','#000000');}},
+                                {'value':'给个关注呗','time':150,'interval':3000,'action':function(){}},
+                            ];
+                            let index = 0;
+                            let doTask = function(){
+                                index = index%list.length;
+                                let item = list[index];
+                                let result = '';
+                                let i = 0;
+                                let hander = setInterval(function(){
+                                    if(i<=item.value.length){
+                                        let value = item.value.substring(0,i);
+                                        $show.setAttribute('text',value);
+                                        i++;
+                                    }else{
+                                        clearInterval(hander);
+                                        index++;
+                                        item.action();
+                                        setTimeout(doTask,item.interval);
+                                    }
+                                },item.time);
+                            };
+                            doTask();
+                        </script>
                     </div>
                 </div>
                 <div class="mod-article">

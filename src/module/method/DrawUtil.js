@@ -8,10 +8,15 @@ export default function(context,data,options) {
                 return new Promise(function(resolve){
                     var image = new Image();
                     image.src = item[1];
-                    image.onload = function(){
+                    if(image.width||image.height){
                         result[item[0]] = image;
                         resolve();
-                    };
+                    }else{
+                        image.onload = function(){
+                            result[item[0]] = image;
+                            resolve();
+                        };
+                    }
                 });
             });
             return promoses.length?Promise.all(promoses).then(()=>result):Promise.resolve({});
