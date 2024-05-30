@@ -643,6 +643,7 @@ a:hover{
         margin-bottom: 15px;
     }
     .mod-panel .hd h1{
+        position: static;
         margin-bottom: 5px;
         line-height: 26px;
         font-size: 20px;
