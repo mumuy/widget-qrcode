@@ -1,5 +1,5 @@
 
-if(!navigator.userAgent.includes('Mobi')){
+if(window.outerWidth>640){
     $('.mod-panel h1').headroom({
         autoHide:false
     });
