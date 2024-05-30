@@ -404,13 +404,13 @@ a:hover{
 }
 .mod-sample .hd{
     padding: 10px 20px;
+    line-height: 24px;
     border-bottom: 1px solid #f0f0f0;
 }
 .mod-sample .hd .title{
     position: relative;
     padding-left: 20px;
     margin-left: -18px;
-    line-height: 24px;
     font-size: 18px;
     font-weight: bold;
     color: #333;
@@ -425,13 +425,21 @@ a:hover{
     background: #2095f2;
     border-radius: 2px;
 }
+.mod-sample .hd .subtitle{
+    float: right;
+    color: #999;
+}
+.mod-sample .hd .subtitle svg,.mod-sample .hd .subtitle span{
+    vertical-align: middle;
+}
 .mod-sample .bd{
     padding: 20px;
+    text-align: center;
 }
 .mod-sample .bd widget-qrcode{
     width: 172px;
     height: 172px;
-    margin: 5px;
+    margin: 6px;
     box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.05);
     border: 1px solid rgba(0, 0, 0, 0.075);
 }
