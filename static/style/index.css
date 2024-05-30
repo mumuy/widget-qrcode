@@ -163,7 +163,7 @@ a:hover{
 	line-height: 22px;
 }
 .mod-panel .hd .title{
-    width: 50%;
+    max-width: 640px;
 }
 .mod-panel .hd h1{
     position: relative;
