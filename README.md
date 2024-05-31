@@ -1,6 +1,7 @@
 # 基于Web component的二维码组件
 
-
+## 演示地址
+[https://passer-by.com/widget-qrcode/](https://passer-by.com/widget-qrcode/)
 ## 网页组件
 ```html
 <widget-qrcode value="https://passer-by.com/"></widget-code>
