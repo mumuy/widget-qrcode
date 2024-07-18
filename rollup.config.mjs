@@ -36,7 +36,7 @@ const commonPlugins = [
     input: './src/widget-qrcode.js',
     output:[{
         file: './dist/widget-qrcode.min.js',
-        format: 'iife',
+        format: 'umd',
         banner
     }],
     acornInjectPlugins: [ importAssertions ],
