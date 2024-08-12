@@ -18,7 +18,7 @@
     </thead>
     <tbody>
         <tr><td>value</td><td>二维码内容</td></tr>
-        <tr><td>template</td><td>样式模板,可选：'default','water','diamond','hexagon','star','rect','bar','heart','glitter','fusion'</td></tr>
+        <tr><td>template</td><td>样式模板,可选：'default','water','diamond','hexagon','star','rect','bar','heart','glitter','stroke','fusion'</td></tr>
         <tr><td>level</td><td>纠错等级,可选：'M','L','Q','H'</td></tr>
         <tr><td>width</td><td>二维码宽度，默认：300</td></tr>
         <tr><td>height</td><td>二维码高度，默认：300</td></tr>

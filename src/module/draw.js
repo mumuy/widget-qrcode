@@ -8,6 +8,7 @@ import _bar from './template/bar.js';
 import _heart from './template/heart.js';
 import _glitter from './template/glitter.js';
 import _fusion from './template/fusion.js';
+import _stroke from './template/stroke.js';
 
 //基础绘制
 export default {
@@ -20,5 +21,6 @@ export default {
     'bar':_bar,
     'heart':_heart,
     'glitter':_glitter,
-    'fusion':_fusion
+    'fusion':_fusion,
+    'stroke':_stroke
 };

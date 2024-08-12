@@ -434,12 +434,11 @@ a:hover{
 }
 .mod-sample .bd{
     padding: 20px;
-    text-align: center;
 }
 .mod-sample .bd widget-qrcode{
     width: 172px;
     height: 172px;
-    margin: 6px;
+    margin: 8px 6px;
     box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.05);
     border: 1px solid rgba(0, 0, 0, 0.075);
 }
