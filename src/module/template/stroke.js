@@ -25,8 +25,8 @@ export default function(context,data,options){
         if(!options.foregroundColor&&resources.foregroundImage){
             foregroundImage = api.getImageBrush(resources.foregroundImage);
         }
-        let innerColor = options.innerColor||colors?.[1]||foregroundImage;
-        let outerColor = options.outerColor||foregroundImage;
+        let innerColor = options.innerColor||foregroundImage;
+        let outerColor = options.outerColor||colors?.[1]||foregroundImage;
         let backgroundImage = backgroundColor;
         if(!options.backgroundColor&&resources.backgroundImage){
             backgroundImage = api.getImageBrush(resources.backgroundImage);
@@ -88,8 +88,6 @@ export default function(context,data,options){
                     if(api.isPositionPoint(i,j)==1){
                         context.fillStyle = innerColor;
                     }else if(api.isPositionPoint(i,j)==2){
-                        let color = colors[1+(i*j)%(colors.length-1)];
-                        let outerColor = options.outerColor||color;
                         context.fillStyle = outerColor;
                     }else{
                         let fillColor = colors[1+(i*j)%(colors.length-1)];
