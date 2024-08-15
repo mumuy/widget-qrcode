@@ -1,6 +1,6 @@
 {
-    "name": "qrcode-tool",
-    "version": "1.0.0",
+    "name": "widget-qrcode",
+    "version": "1.0.4",
     "description": "qrcode component",
     "author": "HaoLe Zheng",
     "license": "MIT",
@@ -22,6 +22,9 @@
         "yarn": "please-use-npm",
         "npm": ">=8"
     },
+    "files":[
+        "dist"
+    ],
     "devDependencies": {
         "@babel/core": "^7.23.2",
         "@babel/plugin-syntax-import-attributes": "^7.22.5",
