@@ -5,6 +5,7 @@ import styleSheet from './style/default.css' assert { type: 'css'};
 class WidgetQRCode extends HTMLElement {
     constructor() {
         super();
+        this.attachShadow({mode:'open'});
     }
     static get observedAttributes(){
         return ['value','template','level','width','height','logo','text','text-color','text-stroke','foreground-image','background-image','foreground-color','background-color','inner-color','outer-color'];
@@ -62,7 +63,6 @@ class WidgetQRCode extends HTMLElement {
     connectedCallback () {
         let _ = this;
         // 模板
-        _.attachShadow({mode:'open'});
         const defaultSheet = new CSSStyleSheet();
         defaultSheet.insertRule(`:host{
             width: ${this.width||300}px;
