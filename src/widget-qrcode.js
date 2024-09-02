@@ -13,47 +13,92 @@ class WidgetQRCode extends HTMLElement {
     get value(){
         return this.getAttribute('value')||'https://passer-by.com/';
     }
+    set value(value){
+        return this.setAttribute('value',value);
+    }
     get template(){
         return this.getAttribute('template')||'default';
+    }
+    set template(value){
+        return this.setAttribute('template',value);
     }
     get level(){
         return this.getAttribute('level')||'H';
     }
+    set level(value){
+        return this.setAttribute('level',value);
+    }
     get width(){
         return +this.getAttribute('width')||0;
+    }
+    set width(value){
+        return this.setAttribute('width',value);
     }
     get height(){
         return +this.getAttribute('height')||0;
     }
+    set height(value){
+        return this.setAttribute('height',value);
+    }
     get logo(){
         return this.getAttribute('logo')||'';
+    }
+    set logo(value){
+        return this.setAttribute('logo',value);
     }
     get text(){
         return this.getAttribute('text')||'';
     }
+    set text(value){
+        return this.setAttribute('text',value);
+    }
     get textColor(){
         return this.getAttribute('text-color')||'';
+    }
+    set textColor(value){
+        return this.setAttribute('text-color',value);
     }
     get textStroke(){
         return this.getAttribute('text-stroke')||'';
     }
+    set textStroke(value){
+        return this.setAttribute('text-stroke',value);
+    }
     get foregroundImage(){
         return this.getAttribute('foreground-image')||'';
+    }
+    set foregroundImage(value){
+        return this.setAttribute('foreground-image',value);
     }
     get backgroundImage(){
         return this.getAttribute('background-image')||'';
     }
+    set backgroundImage(value){
+        return this.setAttribute('background-image',value);
+    }
     get foregroundColor(){
         return this.getAttribute('foreground-color')||'';
+    }
+    set foregroundColor(value){
+        return this.setAttribute('foreground-color',value);
     }
     get backgroundColor(){
         return this.getAttribute('background-color')||'';
     }
+    set backgroundColor(value){
+        return this.setAttribute('background-color',value);
+    }
     get innerColor(){
         return this.getAttribute('inner-color')||'';
     }
+    set innerColor(value){
+        return this.setAttribute('inner-color',value);
+    }
     get outerColor(){
         return this.getAttribute('outer-color')||'';
+    }
+    set outerColor(value){
+        return this.setAttribute('outer-color',value);
     }
     attributeChangedCallback(name, oldValue, newValue){
         if(oldValue!=newValue){
