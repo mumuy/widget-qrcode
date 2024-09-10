@@ -37,7 +37,7 @@ export default function(context,data,options){
         context.restore();
         context.save();
         context.translate(x,y);
-        context.fillStyle = foregroundColor;
+        context.fillStyle = colors[0];
         for(let i=0;i<len;i++){
             for(let j=0;j<len;j++){
                 if(api.isPositionPoint(i,j)==1){
