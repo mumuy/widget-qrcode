@@ -22,6 +22,17 @@ export default function(context,data,options){
         let foregroundColor = options.foregroundColor||'#000000';
         let colors = foregroundColor.split(',');
         let foregroundImage = colors[0];
+        let innerColor = options.innerColor||colors[0];
+        let outerColor = options.outerColor||colors[0];
+        if(resources.backgroundImage){
+            foregroundColor = colors[0].replace(/#([0-9a-fA-F]{6}).*/,'#$188');
+            foregroundImage = foregroundColor;
+            backgroundColor = backgroundColor.replace(/#([0-9a-fA-F]{6}).*/,'#$188');
+            innerColor = innerColor.replace(/#([0-9a-fA-F]{6}).*/,'#$188');
+            outerColor = outerColor.replace(/#([0-9a-fA-F]{6}).*/,'#$188');
+        }
+        let innerImage = innerColor||foregroundImage;
+        let outerImage = outerColor||foregroundImage;
         if(!options.foregroundColor&&resources.foregroundImage){
             foregroundImage = api.getImageBrush(resources.foregroundImage);
         }
@@ -33,16 +44,6 @@ export default function(context,data,options){
             });
             foregroundImage = gradient;
         }
-        let innerColor = options.innerColor||foregroundColor;
-        let outerColor = options.outerColor||foregroundColor;
-        if(resources.backgroundImage){
-            foregroundColor = foregroundColor.replace(/#([0-9a-fA-F]{6}).*/,'#$188');
-            backgroundColor = backgroundColor.replace(/#([0-9a-fA-F]{6}).*/,'#$188');
-            innerColor = innerColor.replace(/#([0-9a-fA-F]{6}).*/,'#$188');
-            outerColor = outerColor.replace(/#([0-9a-fA-F]{6}).*/,'#$188');
-        }
-        let innerImage = innerColor||foregroundImage;
-        let outerImage = outerColor||foregroundImage;
         let backgroundImage = resources.backgroundImage?api.getImageBrush(resources.backgroundImage):backgroundColor;
         context.save();
         context.fillStyle = backgroundImage;
@@ -67,7 +68,7 @@ export default function(context,data,options){
                         api.setRangeDisabled(i,j,7,7);
                     }
                 }else{
-                    let fillColor = api.getValue(i,j)==1?foregroundColor:backgroundColor;
+                    let fillColor = api.getValue(i,j)==1?foregroundImage:backgroundColor;
                     context.fillStyle = fillColor;
                     context.beginPath();
                     context.arc(i*pxWidth,j*pxWidth,0.5*pxWidth,0,0.5*Math.PI);
