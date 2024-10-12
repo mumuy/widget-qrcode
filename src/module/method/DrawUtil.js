@@ -19,6 +19,10 @@ export default function(context,data,options) {
                             imageCache[src] = image;
                             resolve();
                         };
+                        image.onerror = function(){
+                            result[key] = '';
+                            resolve();
+                        };
                     }
                 });
             });
