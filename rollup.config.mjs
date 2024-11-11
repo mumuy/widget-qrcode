@@ -2,7 +2,7 @@ import resolve from '@rollup/plugin-node-resolve';          // 使用node_module
 import terser from '@rollup/plugin-terser';                 // 代码压缩
 import babel from '@rollup/plugin-babel';                   // ECMAScript兼容
 import {importAssertionsPlugin} from 'rollup-plugin-import-assert';
-import pkg from './package.json' assert { type:'json' };     // 获取package信息
+import pkg from './package.json' with { type:'json' };     // 获取package信息
 
 // 版权信息
 const repository = pkg.repository.url.replace(/(.+)(:\/\/.+)\.git$/,'https$2');
