@@ -41,7 +41,7 @@ a:hover{
     position: absolute;
     left: 0;
     top: 0;
-    height: 500px;
+    height: 550px;
     width: 100%;
     z-index: -1;
     background: url('../image/bg.svg') center top repeat-x;
