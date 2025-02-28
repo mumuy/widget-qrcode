@@ -109,10 +109,14 @@ class WidgetQRCode extends HTMLElement {
         let _ = this;
         // 模板
         const defaultSheet = new CSSStyleSheet();
-        defaultSheet.insertRule(`:host{
-            width: ${this.width||300}px;
-            height: ${this.height||300}px;
-        }`);
+        defaultSheet.insertRule(`
+            :host{
+                --width: attr(width px);
+                --height: attr(height px);
+                width: var(--width, 300px);
+                height: var(--height, 300px); 
+            }
+        `);
         if(_.shadowRoot.adoptedStyleSheets){
             _.shadowRoot.adoptedStyleSheets = [defaultSheet,styleSheet];
         }else{
