@@ -4,9 +4,15 @@
 [https://passer-by.com/widget-qrcode/](https://passer-by.com/widget-qrcode/)
 
 
-## 网页组件
+## 组件安装
+```javascript
+npm run widget-qrcode
+```
+
+
+## 组件使用
 ```html
-<widget-qrcode value="https://passer-by.com/"></widget-code>
+<widget-qrcode value="https://passer-by.com/"></widget-qrcode>
 ```
 
 
