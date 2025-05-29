@@ -1,5 +1,5 @@
 :host {
-    display: inline-table;
+    display: inline-block;
     vertical-align: middle;
     container-type: inline-size;
     font-family: Arial,Helvetica,"Microsoft Yahei";
