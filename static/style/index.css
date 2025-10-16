@@ -257,11 +257,11 @@
     word-wrap: break-word;
 }
 .mod-panel .bd .table-inner{
+    margin-bottom: 15px;
     overflow-x: auto;
 }
 .mod-panel .bd table{
     width: 100%;
-    margin-bottom: 15px;
 }
 .mod-panel .bd caption{
     line-height: 30px;
@@ -372,6 +372,7 @@
     white-space: nowrap;
 }
 .mod-panel .input-wrapper{
+    margin-bottom: 20px;
     line-height: 24px;
 }
 .mod-panel .input-wrapper span{
