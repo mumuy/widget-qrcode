@@ -257,14 +257,14 @@
     word-wrap: break-word;
 }
 .mod-panel .bd .table-inner{
-    margin-bottom: 15px;
+    margin-top: 15px;
     overflow-x: auto;
 }
 .mod-panel .bd table{
     width: 100%;
 }
 .mod-panel .bd caption{
-    line-height: 30px;
+    line-height: 32px;
     font-size: 15px;
     font-weight: bold;
 }
@@ -275,6 +275,7 @@
     padding: 6px 12px;
     border: 1px solid #e1e6ea;
     line-height: 24px;
+    white-space: nowrap
 }
 .mod-panel .bd td.th{
     background: #f6f8fa;
@@ -372,7 +373,6 @@
     white-space: nowrap;
 }
 .mod-panel .input-wrapper{
-    margin-bottom: 20px;
     line-height: 24px;
 }
 .mod-panel .input-wrapper span{
