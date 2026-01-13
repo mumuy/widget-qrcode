@@ -42,4 +42,16 @@ const commonPlugins = [
     watch: {
         exclude: 'node_modules/**'
     }
+},{
+    input: './src/toQRCode.js',
+    output:[{
+        file: './dist/toQRCode.min.js',
+        format: 'umd',
+        name: 'toQRCode',
+        banner
+    }],
+    plugins: commonPlugins,
+    watch: {
+        exclude: 'node_modules/**'
+    }
 }];
