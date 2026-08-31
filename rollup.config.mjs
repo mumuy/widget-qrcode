@@ -1,7 +1,7 @@
 import resolve from '@rollup/plugin-node-resolve';          // 使用node_modules包
 import terser from '@rollup/plugin-terser';                 // 代码压缩
 import babel from '@rollup/plugin-babel';                   // ECMAScript兼容
-import {importAssertionsPlugin} from 'rollup-plugin-import-assert';
+import css from "rollup-plugin-import-css";
 import pkg from './package.json' with { type:'json' };     // 获取package信息
 
 // 版权信息
@@ -23,12 +23,12 @@ const banner = `/*!
 
 const commonPlugins = [
     resolve(),
-    importAssertionsPlugin(),
-    terser(),
+    css(),
     babel({
         babelHelpers: 'runtime',
         exclude:'node_modules/**'
-    })
+    }),
+    terser()
 ];
 
  export default [{
@@ -36,6 +36,10 @@ const commonPlugins = [
     output:[{
         file: './dist/widget-qrcode.min.js',
         format: 'umd',
+        banner
+    },{
+        file: './dist/widget-qrcode.min.mjs',
+        format: 'es',
         banner
     }],
     plugins: commonPlugins,
@@ -54,7 +58,14 @@ const commonPlugins = [
         format: 'es',
         banner
     }],
-    plugins: commonPlugins,
+    plugins: [
+        resolve(),
+        babel({
+            babelHelpers: 'runtime',
+            exclude:'node_modules/**'
+        }),
+        terser()
+    ],
     watch: {
         exclude: 'node_modules/**'
     }

@@ -1,6 +1,6 @@
 import QRCode from './module/qrcode.js';
 import Draw from './module/draw.js';
-import styleSheet from './style/default.css' assert { type: 'css'};
+import styleSheet from './style/default.css' with { type: 'css'};
 
 class WidgetQRCode extends HTMLElement {
     constructor() {
