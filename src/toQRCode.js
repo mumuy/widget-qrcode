@@ -8,7 +8,10 @@ export default function(params){
         'value':'https://passer-by.com',
         'width':160
     },params);
-    let data = QRCode(params.value, 'L');
+    if(/^\s*(javascript|data|vbscript):/i.test(options.value)){
+        options.value = 'https://passer-by.com';
+    }
+    let data = QRCode(options.value, 'L');
     const $canvas = document.createElement('CANVAS');
     const context = $canvas.getContext('2d')
     $canvas.width = options.width;
